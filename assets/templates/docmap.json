@@ -1,0 +1,32 @@
+{
+  "$schema": "docmap/v1",
+  "gerado_em": "AAAA-MM-DD",
+  "commit_referencia": "<hash>",
+  "mapeamentos": [
+    {
+      "doc": "docs/04-visao-logica/modelo-de-dados.md",
+      "fontes": ["src/dominio/**/*.entity.ts", "migrations/"],
+      "descricao": "ER e dicionário de dados derivados das entidades e migrações"
+    },
+    {
+      "doc": "docs/04-visao-logica/visao-logica.md",
+      "fontes": ["src/dominio/"],
+      "descricao": "Diagrama de classes e padrões transversais"
+    },
+    {
+      "doc": "docs/03-visao-casos-de-uso/uc1-manter-produto.md",
+      "fontes": ["src/api/produtos/", "tests/integration/produtos.spec.ts"],
+      "descricao": "Especificação do UC1"
+    },
+    {
+      "doc": "docs/02-requisitos/mensagens.md",
+      "fontes": ["lang/"],
+      "descricao": "Mensagens MSG0x espelhadas nos arquivos de idioma"
+    },
+    {
+      "doc": "docs/05-outras-visoes/visao-de-implantacao.md",
+      "fontes": ["Dockerfile", "docker-compose.yml", ".github/workflows/", "infra/"],
+      "descricao": "Infraestrutura e pipeline"
+    }
+  ]
+}
