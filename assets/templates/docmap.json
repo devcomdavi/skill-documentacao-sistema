@@ -58,7 +58,7 @@
         "prisma/schema.prisma",
         "supabase/migrations/"
       ],
-      "descricao": "Inventário de dados pessoais (LGPD), mantido pela skill seguranca-lgpd-vibecode"
+      "descricao": "Inventário de dados pessoais (LGPD), mantido pela skill skill-seguranca-lgpd"
     }
   ]
 }

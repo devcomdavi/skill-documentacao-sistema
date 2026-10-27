@@ -1,5 +1,5 @@
 ---
-name: documentacao-sistema
+name: skill-documentacao-sistema
 description: Elicitação de requisitos e documentação de sistemas pela metodologia clássica de Engenharia de Software, em português — Documento de Visão do Produto (DVP), Documento de Requisitos com RF/RNF/NR, critérios de aceitação e matriz de rastreabilidade, Visão de Casos de Uso (diagrama UML + especificação descritiva de UCs), Visão Lógica (extração de classes e métodos), diagramas UML, ADRs e contrato de API. Use sempre que o usuário falar em elicitação/levantamento de requisitos, documento de visão, DVP, requisitos funcionais e não funcionais, casos de uso, diagrama de casos de uso, UML, visão lógica, visão de casos de uso, modelo de domínio, diagrama de classes, glossário, "pré-projeto", "meu projeto não tem documentação", ou quando pedir para atualizar a documentação após uma implementação. Use também de forma proativa ao final de mudanças estruturais no código (nova entidade, novo endpoint, nova integração, mudança de arquitetura).
 ---
 
@@ -47,7 +47,7 @@ funcionais**. Elas compartilham a mesma pasta `docs/` e os mesmos identificadore
 
 | Skill | Responsabilidade | Ponto de contato com esta |
 |---|---|---|
-| `seguranca-lgpd-vibecode` | Segurança e conformidade com a LGPD | É dona de `docs/07-seguranca-privacidade/` (inventário de dados, modelo de ameaças, relatórios de auditoria, plano de incidentes). Os RNFs de privacidade e segurança e a restrição regulatória do DVP apontam para lá; o modelo de dados marca colunas pessoais e remete ao inventário em vez de repetir base legal e retenção. Decisões de segurança relevantes viram ADR aqui. |
+| `skill-seguranca-lgpd` | Segurança e conformidade com a LGPD | É dona de `docs/07-seguranca-privacidade/` (inventário de dados, modelo de ameaças, relatórios de auditoria, plano de incidentes). Os RNFs de privacidade e segurança e a restrição regulatória do DVP apontam para lá; o modelo de dados marca colunas pessoais e remete ao inventário em vez de repetir base legal e retenção. Decisões de segurança relevantes viram ADR aqui. |
 
 Se uma dessas skills estiver instalada, delegue a ela o que é dela em vez de produzir uma
 versão própria do mesmo artefato. Se não estiver, siga os templates desta skill e registre a
@@ -90,7 +90,7 @@ docs/
 │   └── contrato-api.md                # quando há API HTTP: aponta para a especificação OpenAPI
 ├── 06-decisoes/
 │   └── adr-0001-<titulo>.md
-└── 07-seguranca-privacidade/          # mantida pela skill seguranca-lgpd-vibecode
+└── 07-seguranca-privacidade/          # mantida pela skill skill-seguranca-lgpd
     ├── inventario-dados.md            # registro das operações de tratamento (LGPD, art. 37)
     ├── modelo-de-ameacas.md
     ├── plano-resposta-incidentes.md
@@ -167,7 +167,7 @@ Em **Privacidade e segurança**, se o sistema trata dados pessoais (quase todo s
 trata), os RNFs incluem no mínimo: controle de acesso por recurso, proteção dos dados
 pessoais em trânsito e em repouso, atendimento aos direitos do titular (exportar, corrigir,
 excluir) e retenção definida. O detalhamento técnico e legal fica com a skill
-`seguranca-lgpd-vibecode`; aqui o RNF registra a exigência e como será verificada.
+`skill-seguranca-lgpd`; aqui o RNF registra a exigência e como será verificada.
 
 **Matriz de rastreabilidade RF × RNF** ao final: linhas RNF, colunas RF, `X` onde o
 requisito não-funcional incide sobre o funcional. Ela revela RNF que não afeta nada

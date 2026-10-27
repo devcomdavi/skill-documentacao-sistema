@@ -130,7 +130,7 @@ retorno prático e a mais esquecida — **como adicionar** um endpoint, uma enti
 Se há API HTTP, a visão de implementação aponta para o contrato (`contrato-api.md` e a
 especificação OpenAPI gerada do código) em vez de listar endpoints. A especificação também
 serve de entrada para testes automatizados e para o pentest dinâmico da skill
-`seguranca-lgpd-vibecode`.
+`skill-seguranca-lgpd`.
 
 ---
 

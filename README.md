@@ -1,4 +1,4 @@
-# Skill: documentacao-sistema
+# skill-documentacao-sistema
 
 Elicitação de requisitos e documentação de sistemas para Claude Code e outros agentes de
 código, seguindo o encadeamento clássico da Engenharia de Software em português:
@@ -12,8 +12,8 @@ funcionais**:
 
 | Skill | Foco |
 |---|---|
-| [seguranca-lgpd-vibecode](https://github.com/devcomdavi/seguranca-lgpd-vibecode) | Segurança da informação e LGPD |
-| **documentacao-sistema** (esta) | Requisitos, casos de uso, visões e decisões |
+| [skill-seguranca-lgpd](https://github.com/devcomdavi/skill-seguranca-lgpd) | Segurança da informação e LGPD |
+| **skill-documentacao-sistema** (esta) | Requisitos, casos de uso, visões e decisões |
 
 As skills compartilham a mesma pasta `docs/` e os mesmos identificadores (a de segurança
 mantém `docs/07-seguranca-privacidade/`).
@@ -22,19 +22,19 @@ mantém `docs/07-seguranca-privacidade/`).
 
 **Uso pessoal (todos os seus projetos):**
 ```bash
-git clone https://github.com/devcomdavi/claude-skill-documentacao-sistema ~/.claude/skills/documentacao-sistema
+git clone https://github.com/devcomdavi/skill-documentacao-sistema ~/.claude/skills/skill-documentacao-sistema
 ```
 
 **Uso em um projeto (versionada com o time):**
 ```bash
-git clone https://github.com/devcomdavi/claude-skill-documentacao-sistema .claude/skills/documentacao-sistema
-rm -rf .claude/skills/documentacao-sistema/.git
+git clone https://github.com/devcomdavi/skill-documentacao-sistema .claude/skills/skill-documentacao-sistema
+rm -rf .claude/skills/skill-documentacao-sistema/.git
 git add .claude/skills && git commit -m "chore: skill de documentação"
 ```
 
 Verifique com `/skills` dentro do Claude Code. A skill é *model-invoked*: o Claude decide
 usá-la sozinho quando o pedido combina com a `description`. Também dá para forçar com
-`/documentacao-sistema`.
+`/skill-documentacao-sistema`.
 
 ## Como usar
 
