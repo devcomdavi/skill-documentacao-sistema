@@ -11,7 +11,7 @@
 |---|---|---|---|
 | Pedido | Intenção de compra registrada por um Cliente, contendo um ou mais itens | Ordem, OS | `Pedido` (`src/dominio/pedido/`), tabela `pedidos` |
 | Cliente adimplente | Cliente sem títulos vencidos há mais de 5 dias úteis | Cliente OK, cliente liberado | `Cliente.estaAdimplente()` |
-| Pedido de alto valor | Pedido com valor total acima de R$ 10.000 (RN-007) | Pedido especial | constante `LIMITE_APROVACAO` |
+| Pedido de alto valor | Pedido com valor total acima de R$ 10.000 (RN7) | Pedido especial | constante `LIMITE_APROVACAO` |
 
 ## Termos ambíguos identificados
 | Termo | Problema | Definição adotada |

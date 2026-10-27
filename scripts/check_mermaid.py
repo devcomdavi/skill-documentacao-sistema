@@ -8,12 +8,21 @@ em alguns renderizadores, o resto do documento.
 Uso:
     python check_mermaid.py docs/                 # varre recursivamente
     python check_mermaid.py docs/arquitetura.md   # arquivo unico
+    python check_mermaid.py --estrito docs/       # tambem renderiza cada bloco com o
+                                                  # Mermaid CLI (mmdc), se instalado
+
+O modo --estrito e a verificacao definitiva: usa o parser oficial do Mermaid. Instale com
+`npm install -g @mermaid-js/mermaid-cli`. Sem mmdc, o script avisa e segue so com as
+heuristicas.
 
 Codigo de saida 1 se houver erro, 0 se estiver limpo. Sem dependencias externas.
 """
 
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 TIPOS_VALIDOS = {
@@ -107,6 +116,27 @@ def verificar_bloco(codigo: str, linha_inicial: int) -> list:
     return problemas
 
 
+def renderizar_com_mmdc(codigo: str, linha_inicial: int) -> list:
+    """Renderiza o bloco com o Mermaid CLI; retorna o erro do parser oficial, se houver."""
+    with tempfile.TemporaryDirectory() as tmp:
+        entrada = Path(tmp) / "bloco.mmd"
+        saida = Path(tmp) / "bloco.svg"
+        entrada.write_text(codigo, encoding="utf-8")
+        cmd = ["mmdc", "-i", str(entrada), "-o", str(saida), "-q"]
+        try:
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        except (OSError, subprocess.TimeoutExpired) as e:
+            return [(linha_inicial, f"mmdc não executou: {e}")]
+        if r.returncode != 0 or not saida.exists():
+            erro = (r.stderr or r.stdout).strip().splitlines()
+            resumo = next((l for l in erro if "Error" in l or "error" in l), erro[0] if erro else "erro")
+            return [(linha_inicial, f"mmdc: {resumo.strip()[:160]}")]
+    return []
+
+
+ESTRITO = False
+
+
 def verificar_arquivo(caminho: Path) -> list:
     texto = caminho.read_text(encoding="utf-8", errors="replace")
 
@@ -120,17 +150,28 @@ def verificar_arquivo(caminho: Path) -> list:
     for m in RE_BLOCO.finditer(texto):
         linha_inicial = texto[: m.start()].count("\n") + 2
         achados.extend(verificar_bloco(m.group(1), linha_inicial))
+        if ESTRITO:
+            achados.extend(renderizar_com_mmdc(m.group(1), linha_inicial))
 
     return achados
 
 
 def main() -> int:
-    if len(sys.argv) < 2:
+    global ESTRITO
+    args = sys.argv[1:]
+    if "--estrito" in args:
+        args.remove("--estrito")
+        if shutil.which("mmdc"):
+            ESTRITO = True
+        else:
+            print("aviso: mmdc não instalado; seguindo só com as heurísticas "
+                  "(npm install -g @mermaid-js/mermaid-cli)", file=sys.stderr)
+    if not args:
         print(__doc__)
         return 2
 
     alvos = []
-    for arg in sys.argv[1:]:
+    for arg in args:
         p = Path(arg)
         if p.is_dir():
             alvos.extend(sorted(p.rglob("*.md")))

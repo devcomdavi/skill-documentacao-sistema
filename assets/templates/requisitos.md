@@ -78,6 +78,10 @@ para que \<benefício\>**, seguido do detalhamento (dados obrigatórios, formato
 - **[RF001]** — Como um \<papel\>, eu gostaria de \<ação\>, para que \<benefício\>.
   \<Detalhamento: campos obrigatórios, formatos aceitos, condições, limites.\>
 
+  **Critérios de aceitação**
+  1. **Dado** \<contexto\>, **quando** \<ação\>, **então** \<resultado observável\>.
+  2. **Dado** \<contexto de recusa: dado inválido, sem permissão, limite atingido\>, **quando** \<ação\>, **então** \<recusa e mensagem MSG0x\>.
+
   | Atributo | Valor |
   |---|---|
   | Requisitos vinculados | RF002, RNF014 |
@@ -104,6 +108,11 @@ verificado**.
 - **[RNF00x]** — \<requisito\> · *Verificação:* \<como medir\>
 
 ### Privacidade e segurança
+
+Se o sistema trata dados pessoais, cubra no mínimo: controle de acesso por recurso,
+proteção dos dados em trânsito e em repouso, direitos do titular (exportar, corrigir,
+excluir) e retenção. Detalhes técnicos e legais em `../07-seguranca-privacidade/`.
+
 - **[RNF00x]** — \<requisito\> · *Verificação:* \<como medir\>
 
 ### Usabilidade

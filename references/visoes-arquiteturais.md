@@ -127,6 +127,11 @@ externas relevantes e o motivo de cada escolha não óbvia; como rodar local, te
 e buildar; onde ficam migrações, seeds e configuração por ambiente; e — a seção de maior
 retorno prático e a mais esquecida — **como adicionar** um endpoint, uma entidade, um job.
 
+Se há API HTTP, a visão de implementação aponta para o contrato (`contrato-api.md` e a
+especificação OpenAPI gerada do código) em vez de listar endpoints. A especificação também
+serve de entrada para testes automatizados e para o pentest dinâmico da skill
+`seguranca-lgpd-vibecode`.
+
 ---
 
 ## Visão de implantação
@@ -149,8 +154,12 @@ Arquivo: `docs/04-visao-logica/modelo-de-dados.md`
 
 Diagrama ER com as tabelas principais (agrupadas por módulo se forem muitas); dicionário
 de dados das colunas não óbvias; índices relevantes e a consulta que cada um serve;
-estratégia de migração; dados pessoais marcados com base legal e política de retenção
-(LGPD); volumes esperados e política de expurgo.
+estratégia de migração; volumes esperados e política de expurgo.
+
+Dados pessoais: no dicionário, marque as colunas pessoais (e sensíveis) com um ícone ou
+coluna "Dado pessoal" e remeta ao inventário em `docs/07-seguranca-privacidade/inventario-dados.md`,
+que é a fonte única de finalidade, base legal e retenção (LGPD). Repetir base legal e
+retenção aqui cria duas versões que vão divergir.
 
 O modelo de dados costuma ser derivável do diagrama de classes da visão lógica, mas não é
 idêntico a ele: decisões de normalização, índices e tipos físicos pertencem aqui.

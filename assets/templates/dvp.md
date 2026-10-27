@@ -102,7 +102,7 @@ Percorra os seis tipos; remova os que não se aplicam, mas só depois de checar.
 | RE01 | Hardware | \<capacidade de processamento, memória, rede, dispositivos\> | |
 | RE02 | Software | \<SO, plataforma, bibliotecas, banco, integrações obrigatórias\> | |
 | RE03 | Segurança | \<autenticação, autorização, criptografia, auditoria, backup\> | |
-| RE04 | Regulatória | \<LGPD, acessibilidade, normas setoriais, interoperabilidade\> | |
+| RE04 | Regulatória | \<LGPD (dados pessoais, sensíveis, de crianças), acessibilidade, normas setoriais, interoperabilidade\> | \<detalhes em docs/07-seguranca-privacidade/\> |
 | RE05 | Tempo e custo | \<prazo, orçamento, e o que isso força a priorizar\> | |
 | RE06 | Usabilidade | \<acessibilidade, localização, perfil dos usuários\> | |
 

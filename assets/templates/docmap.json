@@ -5,28 +5,60 @@
   "mapeamentos": [
     {
       "doc": "docs/04-visao-logica/modelo-de-dados.md",
-      "fontes": ["src/dominio/**/*.entity.ts", "migrations/"],
+      "fontes": [
+        "src/dominio/**/*.entity.ts",
+        "migrations/"
+      ],
       "descricao": "ER e dicionário de dados derivados das entidades e migrações"
     },
     {
       "doc": "docs/04-visao-logica/visao-logica.md",
-      "fontes": ["src/dominio/"],
+      "fontes": [
+        "src/dominio/"
+      ],
       "descricao": "Diagrama de classes e padrões transversais"
     },
     {
       "doc": "docs/03-visao-casos-de-uso/uc1-manter-produto.md",
-      "fontes": ["src/api/produtos/", "tests/integration/produtos.spec.ts"],
+      "fontes": [
+        "src/api/produtos/",
+        "tests/integration/produtos.spec.ts"
+      ],
       "descricao": "Especificação do UC1"
     },
     {
       "doc": "docs/02-requisitos/mensagens.md",
-      "fontes": ["lang/"],
+      "fontes": [
+        "lang/"
+      ],
       "descricao": "Mensagens MSG0x espelhadas nos arquivos de idioma"
     },
     {
       "doc": "docs/05-outras-visoes/visao-de-implantacao.md",
-      "fontes": ["Dockerfile", "docker-compose.yml", ".github/workflows/", "infra/"],
+      "fontes": [
+        "Dockerfile",
+        "docker-compose.yml",
+        ".github/workflows/",
+        "infra/"
+      ],
       "descricao": "Infraestrutura e pipeline"
+    },
+    {
+      "doc": "docs/05-outras-visoes/contrato-api.md",
+      "fontes": [
+        "openapi.yaml",
+        "src/api/"
+      ],
+      "descricao": "Contrato de API: aponta para a especificação OpenAPI e liga endpoints a UCs"
+    },
+    {
+      "doc": "docs/07-seguranca-privacidade/inventario-dados.md",
+      "fontes": [
+        "migrations/",
+        "prisma/schema.prisma",
+        "supabase/migrations/"
+      ],
+      "descricao": "Inventário de dados pessoais (LGPD), mantido pela skill seguranca-lgpd-vibecode"
     }
   ]
 }

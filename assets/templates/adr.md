@@ -3,7 +3,7 @@
 - **Status:** Proposto | Aceito | Substituído por ADR-000Y | Descontinuado
 - **Data:** AAAA-MM-DD
 - **Decisores:** <nomes>
-- **Requisitos relacionados:** RNF-00x, RF-00y
+- **Requisitos relacionados:** RNF00x, RF00y
 
 ## Contexto
 Qual problema ou força motivou a decisão. Restrições reais: prazo, time, custo, stack

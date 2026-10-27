@@ -191,10 +191,10 @@ sequenceDiagram
     C->>API: POST /pedidos/{id}/pagar
     API->>SVC: processarPagamento(pedidoId, cartao)
     SVC->>DB: registrar tentativa (status=PENDENTE)
-    SVC->>+GW: autorizar(valor, token)
+    SVC->>GW: autorizar(valor, token)
 
     alt Autorizado
-        GW-->>-SVC: 200 aprovado
+        GW-->>SVC: 200 aprovado
         SVC->>DB: status=PAGO
         SVC-->>API: PagamentoAprovado
         API-->>C: 200 OK
@@ -204,10 +204,10 @@ sequenceDiagram
         API-->>C: 402 Pagamento recusado
     end
 
-    Note over SVC,GW: Timeout de 8s; após 3 falhas,<br>circuit breaker abre (ver ADR-0005)
+    Note over SVC,GW: Timeout de 8s. Após 3 falhas,<br>o circuit breaker abre (ver ADR-0005)
 ```
 
-`->>` chamada síncrona, `-->>` retorno, `-)` mensagem assíncrona, `+`/`-` ativação.
+`->>` chamada síncrona, `-->>` retorno, `-)` mensagem assíncrona, `+`/`-` ativação (cada `+` precisa de exatamente um `-` em todos os caminhos de `alt`). Não use `;` em texto de mensagem ou nota: no diagrama de sequência ele separa instruções.
 Blocos: `alt/else`, `opt`, `loop`, `par`, `critical`, `break`.
 
 ---
@@ -219,7 +219,7 @@ Ideal para documentar ciclo de vida de entidade — muitas regras de negócio mo
 ```mermaid
 stateDiagram-v2
     [*] --> EmEdicao : criar pedido
-    EmEdicao --> AguardandoAprovacao : enviar (valor > R$ 10.000) [RN-007]
+    EmEdicao --> AguardandoAprovacao : enviar (valor > R$ 10.000) [RN7]
     EmEdicao --> Faturado : enviar (valor <= R$ 10.000)
     AguardandoAprovacao --> Faturado : gestor aprova
     AguardandoAprovacao --> EmEdicao : gestor rejeita
@@ -230,7 +230,7 @@ stateDiagram-v2
 
     note right of AguardandoAprovacao
         Expira em 72h sem resposta
-        e retorna para EmEdicao (RN-011)
+        e retorna para EmEdicao (RN11)
     end note
 ```
 
@@ -427,20 +427,21 @@ requirementDiagram
         risk: high
         verifymethod: test
     }
-    element UC001 {
+    element UC1 {
         type: "caso de uso"
-        docref: docs/03-visao-casos-de-uso/uc1-manter-produto.md
+        docref: "docs/03-visao-casos-de-uso/uc1-manter-produto.md"
     }
     element ServicoPedido {
         type: "modulo"
-        docref: src/dominio/pedido/
+        docref: "src/dominio/pedido/"
     }
 
-    UC001 - satisfies -> RF001
+    UC1 - satisfies -> RF001
     ServicoPedido - satisfies -> RF001
     ServicoPedido - satisfies -> RNF014
 ```
 
+Valores com hífen, barra ou espaço (como `docref` e `text` longos) vão entre aspas.
 Tipos aceitos: `requirement`, `functionalRequirement`, `performanceRequirement`,
 `interfaceRequirement`, `physicalRequirement`, `designConstraint`.
 Relações: `contains`, `copies`, `derives`, `satisfies`, `verifies`, `refines`, `traces`.

@@ -9,6 +9,7 @@
 - Vou implementar uma feature → [Requisitos](02-requisitos/requisitos.md) e [Visão de casos de uso](03-visao-casos-de-uso/visao-de-casos-de-uso.md)
 - Vou mexer na estrutura → [Visão lógica](04-visao-logica/visao-logica.md) e [Decisões](06-decisoes/)
 - Estou de plantão → [Visão de implantação](05-outras-visoes/visao-de-implantacao.md)
+- Vou mexer em dados pessoais → [Inventário de dados](07-seguranca-privacidade/inventario-dados.md)
 
 ## Índice
 
@@ -33,9 +34,16 @@
 - [Visão de processos](05-outras-visoes/visao-de-processos.md)
 - [Visão de implementação](05-outras-visoes/visao-de-implementacao.md)
 - [Visão de implantação](05-outras-visoes/visao-de-implantacao.md)
+- [Contrato de API](05-outras-visoes/contrato-api.md)
 
 ### 6. Decisões
 - [ADR-0001 — ...](06-decisoes/adr-0001-....md)
+
+### 7. Segurança e privacidade
+- [Inventário de dados pessoais](07-seguranca-privacidade/inventario-dados.md)
+- [Modelo de ameaças](07-seguranca-privacidade/modelo-de-ameacas.md)
+- [Plano de resposta a incidentes](07-seguranca-privacidade/plano-resposta-incidentes.md)
+- [Auditorias](07-seguranca-privacidade/auditorias/)
 
 ## Convenções de identificação
 
@@ -64,4 +72,7 @@ A documentação é mantida junto com o código. Ao alterar estrutura do sistema
 endpoint, integração, arquitetura), atualize os artefatos afetados no mesmo PR e propague
 na direção do encadeamento: requisito → caso de uso → classes.
 
-Para verificar defasagem: `python scripts/doc_audit.py --repo .`
+Para verificar:
+- defasagem em relação ao código: `python scripts/doc_audit.py --repo .`
+- identificadores e referências: `python scripts/check_ids.py docs/`
+- diagramas: `python scripts/check_mermaid.py docs/`

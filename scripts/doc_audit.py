@@ -152,6 +152,13 @@ def main() -> int:
         )
         return 2
 
+    if git(repo, "rev-parse", "--is-shallow-repository") == "true":
+        print(
+            "aviso: clone raso (shallow). As datas de commit podem estar erradas; "
+            "rode `git fetch --depth=1000` ou `git fetch --unshallow` antes de confiar no resultado.",
+            file=sys.stderr,
+        )
+
     resultados = auditar(repo, caminho_mapa)
 
     if args.json:

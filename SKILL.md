@@ -1,6 +1,6 @@
 ---
 name: documentacao-sistema
-description: Elicitação de requisitos e documentação de sistemas seguindo a metodologia clássica de Engenharia de Software em português — Documento de Visão do Produto (DVP), Documento de Requisitos com RF/RNF/NR e matriz de rastreabilidade, Visão de Casos de Uso (diagrama UML + especificação descritiva de UCs), Visão Lógica (extração de classes e métodos), diagramas UML e ADRs. Use sempre que o usuário falar em elicitação/levantamento de requisitos, documento de visão, DVP, requisitos funcionais e não funcionais, casos de uso, diagrama de casos de uso, UML, visão lógica, visão de casos de uso, modelo de domínio, diagrama de classes, glossário, "pré-projeto", "meu projeto não tem documentação", ou quando pedir para atualizar a documentação após uma implementação. Use também de forma proativa ao final de mudanças estruturais no código (nova entidade, novo endpoint, nova integração, mudança de arquitetura), mesmo sem pedido explícito.
+description: Elicitação de requisitos e documentação de sistemas pela metodologia clássica de Engenharia de Software, em português — Documento de Visão do Produto (DVP), Documento de Requisitos com RF/RNF/NR, critérios de aceitação e matriz de rastreabilidade, Visão de Casos de Uso (diagrama UML + especificação descritiva de UCs), Visão Lógica (extração de classes e métodos), diagramas UML, ADRs e contrato de API. Use sempre que o usuário falar em elicitação/levantamento de requisitos, documento de visão, DVP, requisitos funcionais e não funcionais, casos de uso, diagrama de casos de uso, UML, visão lógica, visão de casos de uso, modelo de domínio, diagrama de classes, glossário, "pré-projeto", "meu projeto não tem documentação", ou quando pedir para atualizar a documentação após uma implementação. Use também de forma proativa ao final de mudanças estruturais no código (nova entidade, novo endpoint, nova integração, mudança de arquitetura).
 ---
 
 # Documentação de Sistema
@@ -35,6 +35,24 @@ que permite citar o artefato em outro documento, em teste e em mensagem de commi
 em git. O `docs/.docmap.json` registra qual documento nasceu de qual parte do código, para
 auditoria posterior.
 
+**Documentação também é contexto para agentes.** Num projeto construído com agentes de
+código, `docs/` é o que o próximo agente (ou a próxima sessão) lê para não reinventar regra
+de negócio nem contradizer um requisito. Por isso ela precisa ser enxuta, navegável a partir
+de um índice e citada no arquivo de instruções do projeto (veja "Contexto para agentes").
+
+## Integração com as outras skills da sequência
+
+Esta skill faz parte de uma sequência para construir sistemas **legais, documentados e
+funcionais**. Elas compartilham a mesma pasta `docs/` e os mesmos identificadores:
+
+| Skill | Responsabilidade | Ponto de contato com esta |
+|---|---|---|
+| `seguranca-lgpd-vibecode` | Segurança e conformidade com a LGPD | É dona de `docs/07-seguranca-privacidade/` (inventário de dados, modelo de ameaças, relatórios de auditoria, plano de incidentes). Os RNFs de privacidade e segurança e a restrição regulatória do DVP apontam para lá; o modelo de dados marca colunas pessoais e remete ao inventário em vez de repetir base legal e retenção. Decisões de segurança relevantes viram ADR aqui. |
+
+Se uma dessas skills estiver instalada, delegue a ela o que é dela em vez de produzir uma
+versão própria do mesmo artefato. Se não estiver, siga os templates desta skill e registre a
+lacuna no `docs/README.md`.
+
 ## Passo 0 — Identificar o modo de trabalho
 
 | Modo | Situação | Vá para |
@@ -68,9 +86,15 @@ docs/
 ├── 05-outras-visoes/
 │   ├── visao-de-processos.md
 │   ├── visao-de-implementacao.md
-│   └── visao-de-implantacao.md
-└── 06-decisoes/
-    └── adr-0001-<titulo>.md
+│   ├── visao-de-implantacao.md
+│   └── contrato-api.md                # quando há API HTTP: aponta para a especificação OpenAPI
+├── 06-decisoes/
+│   └── adr-0001-<titulo>.md
+└── 07-seguranca-privacidade/          # mantida pela skill seguranca-lgpd-vibecode
+    ├── inventario-dados.md            # registro das operações de tratamento (LGPD, art. 37)
+    ├── modelo-de-ameacas.md
+    ├── plano-resposta-incidentes.md
+    └── auditorias/AAAA-MM-DD.md
 ```
 
 Se o projeto já tiver convenção própria de documentação, respeite-a em vez de impor esta.
@@ -123,6 +147,12 @@ Referencie sempre entre colchetes: `[RF001]`.
 Essa forma amarra o requisito a um ator e a um propósito, e alimenta diretamente o
 diagrama de casos de uso e os testes.
 
+**Critérios de aceitação.** Todo RF Essencial ou Importante ganha de 2 a 5 critérios no
+formato *Dado / Quando / Então*, cobrindo o caminho feliz e pelo menos uma recusa
+(dado inválido, permissão negada, limite atingido). São eles que viram testes de aceitação
+e que respondem, sem discussão, "a funcionalidade está pronta?". Critério que não dá para
+verificar com um teste ou uma observação objetiva está mal escrito.
+
 **Atributos de cada requisito:** requisitos vinculados (rastreabilidade), prioridade
 (Essencial, Importante, Desejável), complexidade (Complexa, Alta, Média, Baixa) e risco
 (Alto, Médio, Baixo).
@@ -132,6 +162,12 @@ segurança · Usabilidade · Suportabilidade · Interoperabilidade · Manutenibi
 Desempenho · Implementação · Implantação. Percorra todas as categorias na entrevista,
 mesmo que algumas fiquem vazias — é assim que se descobre a exigência que ninguém
 mencionou.
+
+Em **Privacidade e segurança**, se o sistema trata dados pessoais (quase todo sistema
+trata), os RNFs incluem no mínimo: controle de acesso por recurso, proteção dos dados
+pessoais em trânsito e em repouso, atendimento aos direitos do titular (exportar, corrigir,
+excluir) e retenção definida. O detalhamento técnico e legal fica com a skill
+`seguranca-lgpd-vibecode`; aqui o RNF registra a exigência e como será verificada.
 
 **Matriz de rastreabilidade RF × RNF** ao final: linhas RNF, colunas RF, `X` onde o
 requisito não-funcional incide sobre o funcional. Ela revela RNF que não afeta nada
@@ -199,6 +235,14 @@ Visão de processos, de implementação e de implantação: veja
 Toda escolha estrutural relevante (estilo arquitetural, banco, framework, estratégia de
 autenticação) vira um ADR em `06-decisoes/`, template em `assets/templates/adr.md`.
 
+**Contrato de API.** Se o sistema expõe API HTTP, a especificação OpenAPI (ou o schema
+GraphQL) é a documentação dos endpoints — de preferência **gerada a partir do código**
+(decoradores, schemas zod/pydantic), para não divergir. `05-outras-visoes/contrato-api.md`
+só aponta para ela e registra o que a especificação não diz: autenticação exigida por grupo
+de rotas, versionamento, limites de uso e a ligação endpoint → UC. Não reescreva os
+endpoints à mão em Markdown: duas fontes para o mesmo contrato é a redundância que o
+princípio "faça somente o que for útil" proíbe.
+
 ---
 
 ## Modo B — Documentar sistema existente
@@ -243,7 +287,8 @@ Fluxo:
 
 1. Descubra o delta: `git diff` desde o último commit que tocou `docs/`, ou o diff da
    branch contra a base. Com `.docmap.json` presente, rode
-   `python scripts/doc_audit.py --repo <raiz>`.
+   `python scripts/doc_audit.py --repo <raiz>` (em clone raso, busque histórico antes:
+   as datas ficam erradas sem ele).
 2. Atualize **apenas** os artefatos afetados. Documentação boa tem diff pequeno.
 3. Propague na direção do encadeamento: requisito novo → caso de uso → classes. Requisito
    alterado sem o UC correspondente atualizado é o começo da documentação morta.
@@ -253,6 +298,9 @@ Fluxo:
 6. Decisão estrutural nova → ADR novo. ADR aceito não é editado: crie outro com status
    "Substitui ADR-0004" e marque o antigo como "Substituído por ADR-0009".
 7. Atualize o `.docmap.json`.
+8. Rode `python scripts/check_ids.py docs/` e `python scripts/check_mermaid.py docs/`
+   antes de entregar: referência quebrada e diagrama inválido são os dois defeitos que
+   mais aparecem depois de uma atualização.
 
 Se a deriva for grande demais (meses de atraso), pare de remendar e proponha uma passada
 de Modo B no módulo afetado.
@@ -271,7 +319,10 @@ Regras que evitam diagrama inútil:
 - Máximo ~12 elementos; acima disso, quebre por módulo ou subsistema.
 - Todo diagrama acompanhado de um parágrafo dizendo o que mostra e o que omite.
 - Valide a sintaxe antes de entregar: `python scripts/check_mermaid.py <arquivo ou pasta>`.
-  Um bloco Mermaid inválido derruba a renderização do arquivo inteiro.
+  Um bloco Mermaid inválido derruba a renderização do arquivo inteiro. Se o Mermaid CLI
+  (`mmdc`) estiver instalado, use `--estrito`: ele renderiza cada bloco com o parser
+  oficial e pega o que as heurísticas não pegam (como `;` dentro de nota em diagrama de
+  sequência).
 
 ## Rastreabilidade
 
@@ -284,10 +335,25 @@ Ligações a manter explícitas: cada UC cita os RFs que realiza e as RNs que ap
 cita os UCs que o realizam; cada classe importante cita os UCs de que participa; cada ADR
 cita os RNFs que o motivaram; a matriz RF × RNF fecha o quadro.
 
+Os identificadores também vão para fora de `docs/`: nome ou descrição dos testes
+(`test_RF001_cadastro_rejeita_preco_negativo`), mensagens de commit e descrição de PR
+(`feat(UC3): ... [RF012]`). É isso que permite responder "qual teste cobre este requisito?"
+e "por que este código existe?" com uma busca.
+
+## Contexto para agentes
+
+Ao criar ou reorganizar a documentação, garanta que o arquivo de instruções do projeto
+(`CLAUDE.md`, `AGENTS.md` ou equivalente) tenha um trecho curto apontando para ela. Modelo
+em `assets/templates/contexto-agente.md`. Ele diz onde está o índice, quais documentos ler
+antes de cada tipo de mudança, as convenções de identificadores e a regra de atualizar a
+documentação no mesmo commit da mudança estrutural. Não copie a documentação para dentro
+desse arquivo: aponte para ela, senão são duas fontes para manter.
+
 ## Checklist antes de entregar
 
 - [ ] Numeração sequencial única respeitada entre RF, RNF e NR; nenhum número reciclado
 - [ ] Todo RF em forma de história de usuário, com prioridade, complexidade e risco
+- [ ] RFs Essenciais e Importantes com critérios de aceitação Dado/Quando/Então
 - [ ] Todo RNF dentro de uma das nove categorias e com forma de verificação
 - [ ] Matriz de rastreabilidade RF × RNF preenchida
 - [ ] Casos de uso com verbo no infinitivo; CRUD colapsado em "Manter X"
@@ -297,6 +363,8 @@ cita os RNFs que o motivaram; a matriz RF × RNF fecha o quadro.
 - [ ] Diagramas com sintaxe válida e parágrafo de contexto
 - [ ] Inferências marcadas com `⚠️ A CONFIRMAR` e reunidas numa lista de pendências
 - [ ] Histórico de revisões e `.docmap.json` atualizados
+- [ ] `check_ids.py` sem erros (nenhuma referência a identificador inexistente)
+- [ ] Arquivo de instruções do projeto aponta para `docs/README.md`
 
 ## Arquivos de apoio
 
@@ -309,7 +377,8 @@ cita os RNFs que o motivaram; a matriz RF × RNF fecha o quadro.
 | `references/engenharia-reversa.md` | No Modo B, antes de explorar o repositório |
 | `assets/templates/` | Ao criar cada artefato — copie e preencha |
 | `scripts/doc_audit.py` | No Modo C, para achar documentação defasada |
-| `scripts/check_mermaid.py` | Antes de entregar arquivos com diagramas |
+| `scripts/check_mermaid.py` | Antes de entregar arquivos com diagramas (`--estrito` com mmdc) |
+| `scripts/check_ids.py` | Antes de entregar: sequência RF/RNF/NR, duplicatas, referências quebradas, RF sem UC |
 
 ## Fontes
 
